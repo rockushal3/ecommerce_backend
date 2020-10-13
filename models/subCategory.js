@@ -1,15 +1,16 @@
 const mongoose = require('mongoose') // database connection
 var Schema = mongoose.Schema;
-const subcategory = mongoose.model('subcategory', {   
+
+const subCategory = mongoose.model('subCategory', {   
     name: {
         type: String,
         trim: true
     },
-    category_id:{
+    category:{
         type: Schema.ObjectId, 
         ref: 'category',
         require:true
     }
   });
 
-  module.exports = subcategory
+  module.exports = subCategory

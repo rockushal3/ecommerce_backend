@@ -1,23 +1,32 @@
-require("./database/dbsetting")
-const cors = require("cors")
-const express = require('express')
-const bodyparser = require("body-parser")
-const path = require("path");
-const app = express()
-const publicdirectory= path.join(__dirname,'public');
-app.use(express.static(publicdirectory));
+// Import dependencies
+const express = require('express');
+require("dotenv/config");
+const bodyParser = require('body-parser');
+const cors = require('cors');
 
-//Routers
-const UserRoute = require("./routes/userRoute")
-const CategoryRoute = require("./routes/categoryRoute")
-const SubcategoryRoute= require("./routes/subcategoryRoute")
+const port = process.env.PORT || 8080
 
-//parse json data in form body client UI
-app.use(bodyparser.urlencoded({ extended: true }))
-app.use(cors())
-app.use(bodyparser.json())
-app.use(express.json())
-app.use(UserRoute)
-app.use(CategoryRoute)
-app.use(SubcategoryRoute)
-app.listen(3030)
+require('./database/db')
+
+// Initialize the app
+const app = express();
+
+app.use(cors());
+app.use('/public', express.static(__dirname+"/public"))
+
+// Configure bodyparser to handle post requests
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
+
+// Import routes
+let apiRoutes = require("./routes/userRoutes")
+let adminApiRoutes = require("./routes/adminRoutes")
+
+// Use Api routes in the App
+app.use('/api', apiRoutes)
+app.use('/api/admin', adminApiRoutes)
+
+// Launch app to listen to specified port
+app.listen(port, function () {
+     console.log("Running App on port " + port);
+});

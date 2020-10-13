@@ -1,4 +1,6 @@
 const mongoose = require('mongoose') // database connection
+var Schema = mongoose.Schema;
+
 const product = mongoose.model('product', {   
     name: {
         type: String,
@@ -19,37 +21,22 @@ const product = mongoose.model('product', {
         require: true,
         trim: true
     },
-    image:[{
-    image:{
-        type:String,
-        trim:true
-    }}],
-    category_id:{
+    images:[{
+        type: String,
+        trim: true
+    }],
+    category:{
         type: Schema.ObjectId, 
         ref: 'category'
     },
-    subcategory_id:{
+    subcategory:{
         type: Schema.ObjectId, 
-        ref: 'subcategory'
+        ref: 'subCategory'
     },
     description:{
         type:String,
         trim:true
-    },
-    rating:[{
-        reviewBy: {
-            type: Schema.ObjectId, 
-            ref: 'user' 
-            },
-        rating: {
-            type: Number,
-            trim: true
-        },
-        comment:{
-            type:String,
-            trim:true
-        }
-    }]
+    }
   });
 
   module.exports = product
