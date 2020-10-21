@@ -94,7 +94,7 @@ exports.update = function (req, res) {
             })
         }
 
-        SubCategory.findOne({_id: subCategory._id}).populate('category').then(dt => {
+        SubCategory.find().populate('category').then(dt => {
 
             res.send({
                 status: 200,

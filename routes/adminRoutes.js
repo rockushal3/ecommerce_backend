@@ -35,6 +35,9 @@ router.route('/category/:category_id')
     .put(auth, categoryController.update)
     .delete(auth, categoryController.delete);
 
+router.route('/category/:category_id/subcategory')
+    .get(auth, categoryController.subCategory)
+
 //----------------------Sub Category Routes-------------------//
 router.route('/subcategory')
     .get(auth, subCategoryController.index)

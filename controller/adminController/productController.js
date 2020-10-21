@@ -105,19 +105,13 @@ exports.update = function (req, res) {
             })
         }
         if(req.files.image1){
-            if(images[0] != req.files.image1[0].filename){
-                images[0] = req.files.image1[0].filename
-            }
+            images[0] = req.files.image1[0].filename
         }
         if(req.files.image2){
-            if(images[1] != req.files.image2[0].filename){
-                images[1] = req.files.image2[0].filename
-            }
+            images[1] = req.files.image2[0].filename
         }
         if(req.files.image3){
-            if(images[2] != req.files.image3[0].filename){
-                images[2] = req.files.image3[0].filename
-            }
+            images[2] = req.files.image3[0].filename
         }
         Product.findByIdAndUpdate(req.params.product_id, {
             name: req.body.name,
@@ -136,7 +130,7 @@ exports.update = function (req, res) {
                 })
             }
     
-            Product.findOne({_id: product._id}).populate('category').populate('subcategory')
+            Product.find().populate('category').populate('subcategory')
             .then(dt => {  
                 res.send({
                     status: 200,

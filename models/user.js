@@ -18,16 +18,6 @@ const userSchema = new mongoose.Schema({
         require: true,
         trim: true
     },
-    gender: {
-        type: String,
-        require: true,
-        trim: true
-    },
-    dob: {
-        type: String,
-        require: true,
-        trim: true
-    },
     email: {
         type: String,
         require: true,
@@ -44,15 +34,7 @@ const userSchema = new mongoose.Schema({
         require: true,
         trim: true
     },
-    image:{
-        type:String,
-        trim:true
-    },
     account: String,
-    isVerify:{
-        type:Boolean,
-        default:false
-    },
     tokens: [{
         token: {
             type: String,

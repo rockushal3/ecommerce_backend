@@ -1,12 +1,25 @@
 const Category = require("../../models/category")
+const SubCategory = require("../../models/subCategory")
 
 exports.index = function (req, res) {
     Category.find()
     .then(category => {
-        res.send({
-            status: 200,
-            message: "Category retrieved successfully",
-            data: category
+        var cat = [];
+
+        category.map(function (item){
+            SubCategory.find({category: item._id}).then(response => {
+                item._doc.SubCategory = response;
+                cat.push(item)
+
+                if(cat.length == category.length){
+                    res.send({
+                        status: 200,
+                        message: "Category retrieved successfully",
+                        data: cat
+                    })
+                }
+
+            })
         })
     }).catch(err => {
         res.json({
@@ -74,7 +87,7 @@ exports.update = function (req, res) {
             })
         }
 
-        Category.findOne({_id: category._id}).then(dt => {  
+        Category.find().then(dt => {  
             res.send({
                 status: 200,
                 message: 'Category updated successfully.',
@@ -124,5 +137,21 @@ exports.delete = function (req, res) {
             status: 500,
             message: err.message
         })
+    })
+};
+
+exports.subCategory = function (req, res) {
+    SubCategory.find({category: req.params.category_id}).populate('category')
+    .then(subCategory => {
+        res.send({
+            status: 200,
+            message: "SubCategory retrieved successfully",
+            data: subCategory
+        })
+    }).catch(err => {
+        res.json({
+            status: "500",
+            message: err.message,
+        });
     })
 };
